@@ -23,7 +23,7 @@ const EditFormFooter: FC<Props> = ({ path, isSuccess }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      message.success("Ma'lumot saqlandi");
+      message.success("Ma'lumot Yangilandi");
       setTimeout(() => {
         customNavigate(path, search);
       }, 1000);

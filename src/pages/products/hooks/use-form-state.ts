@@ -1,5 +1,7 @@
 import { IProduct } from "@/interfaces/product";
+import { RootState } from "@/redux";
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const initialData: IProduct = {
@@ -11,17 +13,21 @@ const initialData: IProduct = {
 };
 
 export const useProductFormState = () => {
-  const { id: categoryId } = useParams();
-
-  const submitData = {};
+  const { id: productId } = useParams();
+  const products = useSelector((store: RootState) => store.products.products);
 
   const defaultData: any = useMemo(() => {
-    if (categoryId && submitData) {
+    if (productId && products) {
+      const product = products.find(
+        (product: IProduct) => String(product.id) === productId
+      );
       return {
-        ...submitData,
+        ...product,
+        price: String(product.price),
+        id: String(product.id),
       };
     } else return initialData;
-  }, [categoryId, submitData]);
+  }, [productId, products]);
 
-  return { data: defaultData, id: categoryId };
+  return { data: defaultData, id: productId, products };
 };

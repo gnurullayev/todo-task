@@ -17,8 +17,8 @@ const Products = () => {
   const columns: any = [
     {
       title: "Mahsulot nomi",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "title",
+      key: "title",
     },
     {
       title: "Mahsulot ma'lumoti",

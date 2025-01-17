@@ -12,8 +12,13 @@ interface Params extends FormParams {
 
 const ProductForm = ({ initialData, mode, formFooter, mutate }: Params) => {
   const onFinish = (data: any) => {
-    if (mutate) mutate(data);
+    console.log(data);
+
+    const newProduct = { ...data, id: data.id ? data.id : Date.now() };
+    if (mutate) mutate(newProduct);
   };
+
+  console.log(initialData);
 
   return (
     <Form initialValues={initialData} onFinish={onFinish}>

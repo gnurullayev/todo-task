@@ -1,5 +1,6 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from ".";
+import { IProduct } from "@/interfaces/product";
 
 interface ProductsState {
   products: any;
@@ -14,7 +15,10 @@ const initialState: ProductsState = {
 export const products = createModel<RootModel>()({
   state: initialState,
   reducers: {
-    changeProducts(state, payload: ProductsState) {
+    addProduct(state, payload: ProductsState) {
+      return { ...state, products: payload };
+    },
+    changeProducts(state, payload: IProduct[]) {
       return { ...state, products: payload };
     },
 

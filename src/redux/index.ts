@@ -7,7 +7,7 @@ const persistPlugin: any = createPersistPlugin({
   key: "root",
   storage,
   version: 1,
-  whitelist: ["userData"],
+  whitelist: ["products"],
 });
 
 const middlewares: any = [];

@@ -4,20 +4,33 @@ import { route } from "@/utils";
 import { routes } from "@/constants/routes";
 import { useProductFormState } from "./hooks/use-form-state";
 import ProductForm from "./components/ProductForm";
-import { useCustomMutation } from "@/hooks/use-mutation";
+import { useState } from "react";
+import { IProduct } from "@/interfaces/product";
+import { message } from "antd";
+import { dispatch } from "@/redux";
 
 const ProductCreate = () => {
-  const { data } = useProductFormState();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { data, products } = useProductFormState();
 
-  const { submitData, mutationFn, isSuccess } = useCustomMutation({
-    key: "products",
-  });
+  const onSubmit = (data: IProduct) => {
+    const sameProduct = products.find(
+      (product: IProduct) => product.title === data.title
+    );
+    console.log(data, sameProduct, products);
+    if (sameProduct) {
+      message.error("Bu mahsulot mavjud");
+    } else {
+      setIsSuccess(true);
+      dispatch.products.changeProducts([data, ...products]);
+    }
+  };
 
   return (
     <ProductForm
       initialData={data}
       mode={FormMode.create}
-      mutate={mutationFn}
+      mutate={onSubmit}
       formFooter={
         <CreateFormFooter
           isSuccess={isSuccess}
