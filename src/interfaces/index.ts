@@ -10,12 +10,6 @@ export interface IIconComponent {
   stroke?: string;
 }
 
-export interface AuthState {
-  isLogged: boolean;
-  token: string | null;
-  user_role: string | null;
-}
-
 export interface IParams {
   pi?: number;
   ps?: number;
@@ -29,7 +23,6 @@ export interface FormStateParams {
 
 export interface FormParams {
   mode: "edit" | "view" | "create";
-  mutate?: (a: any, b: any) => void;
-  loading?: boolean;
   formFooter: ReactNode;
+  mutate?: (a: any) => void;
 }

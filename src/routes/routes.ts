@@ -4,11 +4,15 @@ import Categories from "@/pages/category";
 import CategoryCreate from "@/pages/category/create";
 import CategoryEdit from "@/pages/category/edit";
 import CategoryShow from "@/pages/category/show";
+import Products from "@/pages/products";
+import ProductCreate from "@/pages/products/create";
+import ProductEdit from "@/pages/products/edit";
+import ProductShow from "@/pages/products/show";
 
 export const publicRoutes = [
   {
     path: routes.HOME,
-    element: Categories,
+    element: Products,
   },
   {
     path: routes.CATEGORIES,
@@ -25,5 +29,19 @@ export const publicRoutes = [
   {
     path: routes.CATEGORIES_SHOW,
     element: CategoryShow,
+  },
+
+  //PRODUCTS
+  {
+    path: routes.PRODUCTS_CREATE,
+    element: ProductCreate,
+  },
+  {
+    path: routes.PRODUCTS_EDIT,
+    element: ProductEdit,
+  },
+  {
+    path: routes.PRODUCTS_SHOW,
+    element: ProductShow,
   },
 ];

@@ -12,5 +12,6 @@ interface MenuItem extends Item {
 }
 
 export const menuItems = (): MenuItem[] => [
-  { name: "Category", path: routes.CATEGORIES, icon: ProductOutlined },
+  { name: "Categories", path: routes.CATEGORIES, icon: ProductOutlined },
+  { name: "Products", path: routes.HOME, icon: ProductOutlined },
 ];

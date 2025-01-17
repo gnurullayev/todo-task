@@ -1,14 +1,16 @@
-import { ICategory } from "@/interfaces/category";
+import { IProduct } from "@/interfaces/product";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 
-const initialData: ICategory = {
+const initialData: IProduct = {
   id: null,
-  name: "",
+  title: "",
+  price: 0,
+  description: "",
   is_active: true,
 };
 
-export const useCategoryFormState = () => {
+export const useProductFormState = () => {
   const { id: categoryId } = useParams();
 
   const submitData = {};

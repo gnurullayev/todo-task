@@ -1,12 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { filterOption } from "@/utils";
 import { DownOutlined } from "@ant-design/icons";
 import { Form, Select as AntSelect } from "antd";
 import styles from "./Select.module.css";
 import { CustomTagProps } from "rc-select/lib/BaseSelect";
-import { useQuery } from "@tanstack/react-query";
 import { FormMode } from "@/enums/form-mode";
 import { formModeType } from "@/types";
+import { ISelectData } from "@/interfaces";
 export const arrowStyle = { color: "#000", width: "17px", height: "17px" };
 
 type isList = true | false;
@@ -46,7 +46,7 @@ export interface SelectProps {
   onSelect?: any;
   suffixIcon?: any;
   onSearch?: any;
-  dataSource?: object[];
+  dataSource?: ISelectData[];
   request?: {
     queryKey: string;
     queryFn: (a: any) => Promise<any>;
@@ -80,60 +80,10 @@ export const Select: FC<SelectProps> = ({
   suffixIcon,
   onSearch,
   dataSource,
-  request,
   customMode,
   filterSort,
 }) => {
-  const [innerData, setInnerData] = useState<any>(dataSource || []);
-  const [currentPage, setCurrentPage] = useState<number | undefined>(1);
-  const [pageSize, setPageSize] = useState(500);
-  const [totalPages, setTotalPages] = useState(0);
-  const [search, setSearch] = useState("");
   const itemName = list ? [field.name, name] : name;
-
-  const { isLoading, refetch } = useQuery({
-    queryKey: [request ? request.queryKey : ""],
-    queryFn: request
-      ? async () =>
-          await request
-            .queryFn({
-              pi: currentPage,
-              ps: pageSize,
-              s: search,
-            })
-            .then((res) => {
-              if (res.items) {
-                setInnerData(
-                  res.items.map((item: any) => ({
-                    ...item,
-                    value: item.id,
-                    label: item.name,
-                  }))
-                );
-                setCurrentPage(res.pageIndex);
-                setPageSize(res.pageSize);
-                setTotalPages(res.totalPages);
-              }
-              setInnerData(
-                res.list.map((item: any) => ({
-                  ...item,
-                  value: item.id,
-                  label: item.name,
-                }))
-              );
-            })
-      : ([] as any),
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [currentPage, pageSize, totalPages, search]);
-
-  const onInputKeyDown = (e: any) => {
-    setTimeout(() => {
-      setSearch(e.target.value);
-    }, 1000);
-  };
 
   const onPopupScroll = () => {};
 
@@ -159,13 +109,12 @@ export const Select: FC<SelectProps> = ({
         optionFilterProp="children"
         filterOption={filterOption}
         filterSort={filterSort}
-        options={request ? innerData : dataSource}
+        options={dataSource ? dataSource : []}
         disabled={isView ? true : disabled}
         className={`${styles.auth_input} ${inputClassName}`}
         getPopupContainer={(triggerNode: HTMLElement) => triggerNode}
         onChange={onChange}
         defaultValue={defaultValue}
-        onInputKeyDown={onInputKeyDown}
         style={style}
         size={size}
         value={value}
@@ -173,8 +122,6 @@ export const Select: FC<SelectProps> = ({
         showSearch={showSearch}
         maxTagCount={maxTagCount}
         onSelect={onSelect}
-        loading={isLoading}
-        onFocus={() => setSearch("")}
         onPopupScroll={onPopupScroll}
       />
     </Form.Item>

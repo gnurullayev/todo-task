@@ -14,7 +14,7 @@ const CategoryCreate = () => {
       mode={FormMode.create}
       formFooter={
         <CreateFormFooter
-          isSuccess={true}
+          isSuccess={false}
           cancelPath={route(routes.CATEGORIES)}
           createdPath={route(routes.CATEGORIES)}
         />

@@ -1,33 +1,34 @@
 import { ExclamationCircleFilled } from "@ant-design/icons";
-import { Button, message, Modal } from "antd";
+import { Button, Modal } from "antd";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+type KeyType = "products" | "category";
+
 interface Props {
   id: string;
-  deletePromiseFn: any;
   title: string;
   content?: string;
   redirectPath?: string;
+  key: KeyType;
 }
 
 const { confirm } = Modal;
 
 function DeleteConfirmationModal({
   id,
-  deletePromiseFn,
   title,
   content,
   redirectPath,
+  key,
 }: Props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const showPromiseConfirm = ({
     id,
-    deletePromiseFn,
     title = "Ma'lumot",
     content,
-    redirectPath,
+    key,
   }: Props) => {
     confirm({
       title: `${title}ni o'chirib tashlamoqchmisiz ?`,
@@ -49,14 +50,14 @@ function DeleteConfirmationModal({
       onClick={() =>
         showPromiseConfirm({
           id,
-          deletePromiseFn,
           title,
           content,
           redirectPath,
+          key,
         })
       }
     >
-      {t("Buttons.delete")}
+      O'chirish
     </Button>
   );
 }

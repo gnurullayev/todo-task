@@ -4,11 +4,11 @@ import { route } from "@/utils";
 import { routes } from "@/constants/routes";
 import { useEffect } from "react";
 import { dispatch } from "@/redux";
-import { useCategoryFormState } from "./hooks/use-form-state";
-import CategoryForm from "./components/CategoryForm";
+import { useProductFormState } from "./hooks/use-form-state";
+import ProductForm from "./components/ProductForm";
 
-const CategoryEdit = () => {
-  const { data } = useCategoryFormState();
+const ProductEdit = () => {
+  const { data } = useProductFormState();
 
   useEffect(() => {
     if (data) {
@@ -17,7 +17,7 @@ const CategoryEdit = () => {
   }, [data]);
 
   return (
-    <CategoryForm
+    <ProductForm
       initialData={data}
       mode={FormMode.edit}
       formFooter={
@@ -27,4 +27,4 @@ const CategoryEdit = () => {
   );
 };
 
-export default CategoryEdit;
+export default ProductEdit;

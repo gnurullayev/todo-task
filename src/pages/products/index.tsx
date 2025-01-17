@@ -3,23 +3,37 @@ import { routes } from "@/constants/routes";
 import { route } from "@/utils";
 import { DeleteConfirmationModal } from "@/Components";
 import { useCustomNavigate } from "@/hooks/use-custom-navigate";
-import { ICategory } from "@/interfaces/category";
 import { Table } from "@/Components/common/Table";
 import { Tag } from "antd";
+import { IProduct } from "@/interfaces/product";
+import { useSelector } from "react-redux";
 
-const Categories = () => {
+const Products = () => {
   const { customNavigate, search } = useCustomNavigate();
+  const products: IProduct[] = useSelector(
+    (state: any) => state.products.products
+  );
 
   const columns: any = [
     {
-      title: "Kategory nomi",
+      title: "Mahsulot nomi",
       dataIndex: "name",
       key: "name",
     },
     {
+      title: "Mahsulot ma'lumoti",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Mahsulot narxi",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
       title: "Holati",
       key: "is_active",
-      render: (_: any, record: ICategory) => (
+      render: (_: any, record: IProduct) => (
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <Tag color={record.is_active ? "success" : "warning"}>
             {record.is_active ? "Faol" : "No faol"}
@@ -28,15 +42,15 @@ const Categories = () => {
       ),
     },
     {
-      title: "",
+      title: "Action",
       key: "action",
-      render: (_: any, record: ICategory) => (
+      render: (_: any, record: IProduct) => (
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <Button
             type="primary"
             onClick={() =>
               customNavigate(
-                route(routes.CATEGORIES_EDIT, { id: record.id as string }),
+                route(routes.PRODUCTS_EDIT, { id: record.id as string }),
                 search
               )
             }
@@ -47,7 +61,7 @@ const Categories = () => {
             type="link"
             onClick={() =>
               customNavigate(
-                route(routes.CATEGORIES_SHOW, { id: record.id as string }),
+                route(routes.PRODUCTS_SHOW, { id: record.id as string }),
                 search
               )
             }
@@ -56,8 +70,8 @@ const Categories = () => {
 
           <DeleteConfirmationModal
             id={record.id as string}
-            title="Category"
-            key="category"
+            title="Mahsulot"
+            key="products"
           />
         </div>
       ),
@@ -65,8 +79,13 @@ const Categories = () => {
   ];
 
   return (
-    <Table columns={columns} rowKey="id" createUrl={routes.CATEGORIES_CREATE} />
+    <Table
+      columns={columns}
+      rowKey="id"
+      createUrl={routes.PRODUCTS_CREATE}
+      dataSource={products}
+    />
   );
 };
 
-export default Categories;
+export default Products;

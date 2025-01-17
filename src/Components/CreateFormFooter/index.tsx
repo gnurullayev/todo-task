@@ -37,7 +37,7 @@ const CreateFormFooter: FC<Props> = ({
 
   return (
     <Wrapper>
-      <Button htmlType="submit" type="primary" label={"Bekor qilish"} />
+      <Button htmlType="submit" type="primary" label={"Saqlash"} />
 
       <Button
         htmlType="button"

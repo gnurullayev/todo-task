@@ -1,6 +1,6 @@
+import { Checkbox } from "@/Components/common/Checkbox";
 import { Form } from "@/Components/common/Form";
 import { Input } from "@/Components/common/Input";
-import { Textarea } from "@/Components/common/Textarea";
 import { FormParams } from "@/interfaces";
 import { ICategory } from "@/interfaces/category";
 
@@ -15,17 +15,12 @@ const CategoryForm = ({ initialData, mode, formFooter }: Params) => {
     <Form initialValues={initialData} onFinish={onFinish}>
       <Input name="name" label="Name" mode={mode} />
 
-      <Input name="short_content" label="Qisqa tarif" mode={mode} />
-      <Textarea
-        name="description"
-        label="Description"
+      <Checkbox
+        name="is_active"
+        label="Kategory statusi"
         mode={mode}
-        list={false}
+        checked={initialData.is_active}
       />
-
-      {mode === "edit" && (
-        <Input name="link" label="Category uchun link" mode={mode} />
-      )}
 
       <Input isHidden={true} name="id" mode={mode} />
       {formFooter}
