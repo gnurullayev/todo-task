@@ -4,15 +4,24 @@ import { route } from "@/utils";
 import { DeleteConfirmationModal } from "@/Components";
 import { useCustomNavigate } from "@/hooks/use-custom-navigate";
 import { Table } from "@/Components/common/Table";
-import { Tag } from "antd";
+import { message, Tag } from "antd";
 import { IProduct } from "@/interfaces/product";
 import { useSelector } from "react-redux";
+import { dispatch } from "@/redux";
 
 const Products = () => {
   const { customNavigate, search } = useCustomNavigate();
   const products: IProduct[] = useSelector(
     (state: any) => state.products.products
   );
+
+  const deleteProduct = (id: string) => {
+    const filteredProducts = products.filter(
+      (product: IProduct) => String(product.id) !== id
+    );
+    dispatch.products.changeProducts(filteredProducts);
+    message.success("Mahsulot o'chirildi");
+  };
 
   const columns: any = [
     {
@@ -42,7 +51,7 @@ const Products = () => {
       ),
     },
     {
-      title: "Action",
+      title: "",
       key: "action",
       render: (_: any, record: IProduct) => (
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
@@ -72,6 +81,7 @@ const Products = () => {
             id={record.id as string}
             title="Mahsulot"
             key="products"
+            deleteData={deleteProduct}
           />
         </div>
       ),

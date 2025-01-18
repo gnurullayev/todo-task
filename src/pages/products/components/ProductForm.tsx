@@ -3,35 +3,48 @@ import { Form } from "@/Components/common/Form";
 import { Input } from "@/Components/common/Input";
 import { Select } from "@/Components/common/Select";
 import { Textarea } from "@/Components/common/Textarea";
-import { FormParams } from "@/interfaces";
+import { FormParams, ISelectData } from "@/interfaces";
 import { IProduct } from "@/interfaces/product";
 
 interface Params extends FormParams {
   initialData: IProduct;
+  categories: ISelectData[];
 }
 
-const ProductForm = ({ initialData, mode, formFooter, mutate }: Params) => {
+const ProductForm = ({
+  initialData,
+  mode,
+  formFooter,
+  mutate,
+  categories,
+}: Params) => {
   const onFinish = (data: any) => {
-    console.log(data);
-
     const newProduct = { ...data, id: data.id ? data.id : Date.now() };
     if (mutate) mutate(newProduct);
   };
 
-  console.log(initialData);
-
   return (
     <Form initialValues={initialData} onFinish={onFinish}>
-      <Input name="title" label="Mahsulot nomi" mode={mode} />
+      <Input
+        name="title"
+        label="Mahsulot nomi"
+        mode={mode}
+        rules={[
+          {
+            required: true,
+            message: "Iltimos mahsulot Nomini tanlang",
+          },
+        ]}
+      />
       <Select
         name="type"
         label="Mahsulot turi"
         customMode={mode}
         list={false}
-        dataSource={[]}
+        dataSource={categories}
         rules={[
           {
-            required: false,
+            required: true,
             message: "Iltimos mahsulot turini tanlang",
           },
         ]}

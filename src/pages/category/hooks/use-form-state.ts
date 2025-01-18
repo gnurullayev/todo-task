@@ -1,5 +1,7 @@
 import { ICategory } from "@/interfaces/category";
+import { RootState } from "@/redux";
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const initialData: ICategory = {
@@ -10,16 +12,21 @@ const initialData: ICategory = {
 
 export const useCategoryFormState = () => {
   const { id: categoryId } = useParams();
-
-  const submitData = {};
+  const categories = useSelector(
+    (store: RootState) => store.products.categories
+  );
 
   const defaultData: any = useMemo(() => {
-    if (categoryId && submitData) {
+    if (categoryId && categories) {
+      const category = categories.find(
+        (category: ICategory) => String(category.id) === categoryId
+      );
       return {
-        ...submitData,
+        ...category,
+        id: String(category.id),
       };
     } else return initialData;
-  }, [categoryId, submitData]);
+  }, [categoryId, categories]);
 
-  return { data: defaultData, id: categoryId };
+  return { data: defaultData, id: categoryId, categories };
 };

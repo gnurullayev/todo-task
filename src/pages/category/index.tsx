@@ -5,10 +5,23 @@ import { DeleteConfirmationModal } from "@/Components";
 import { useCustomNavigate } from "@/hooks/use-custom-navigate";
 import { ICategory } from "@/interfaces/category";
 import { Table } from "@/Components/common/Table";
-import { Tag } from "antd";
+import { message, Tag } from "antd";
+import { useSelector } from "react-redux";
+import { dispatch, RootState } from "@/redux";
 
 const Categories = () => {
   const { customNavigate, search } = useCustomNavigate();
+  const categories: ICategory[] = useSelector(
+    (state: RootState) => state.products.categories
+  );
+
+  const deleteCategory = (id: string) => {
+    const filteredCategories = categories.filter(
+      (category: ICategory) => String(category.id) !== id
+    );
+    dispatch.products.changeCategories(filteredCategories);
+    message.success("Kategoriya o'chirildi");
+  };
 
   const columns: any = [
     {
@@ -58,6 +71,7 @@ const Categories = () => {
             id={record.id as string}
             title="Category"
             key="category"
+            deleteData={deleteCategory}
           />
         </div>
       ),
@@ -65,7 +79,12 @@ const Categories = () => {
   ];
 
   return (
-    <Table columns={columns} rowKey="id" createUrl={routes.CATEGORIES_CREATE} />
+    <Table
+      columns={columns}
+      rowKey="id"
+      createUrl={routes.CATEGORIES_CREATE}
+      dataSource={categories}
+    />
   );
 };
 

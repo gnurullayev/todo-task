@@ -6,12 +6,13 @@ import { useProductFormState } from "./hooks/use-form-state";
 import ProductForm from "./components/ProductForm";
 
 const ProductShow = () => {
-  const { data, id } = useProductFormState();
+  const { data, id, categories } = useProductFormState();
 
   return (
     <ProductForm
       initialData={data}
       mode={FormMode.view}
+      categories={categories}
       formFooter={
         <ShowFormFooter
           path={route(routes.PRODUCTS_EDIT, { id })}

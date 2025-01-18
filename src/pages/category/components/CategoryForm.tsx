@@ -8,16 +8,19 @@ interface Params extends FormParams {
   initialData: ICategory;
 }
 
-const CategoryForm = ({ initialData, mode, formFooter }: Params) => {
-  const onFinish = (data: any) => {};
+const CategoryForm = ({ initialData, mode, formFooter, mutate }: Params) => {
+  const onFinish = (data: any) => {
+    const newCategory = { ...data, id: data.id ? data.id : Date.now() };
+    if (mutate) mutate(newCategory);
+  };
 
   return (
     <Form initialValues={initialData} onFinish={onFinish}>
-      <Input name="name" label="Name" mode={mode} />
+      <Input name="name" label="Kategoriya nomi" mode={mode} />
 
       <Checkbox
         name="is_active"
-        label="Kategory statusi"
+        label="Kategory holati"
         mode={mode}
         checked={initialData.is_active}
       />

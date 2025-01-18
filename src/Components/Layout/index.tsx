@@ -3,7 +3,6 @@ import { FC, ReactNode } from "react";
 import type { LayoutProps } from "antd";
 import { Layout as LayoutComponent } from "antd";
 import Sidebar from "./Sidebar";
-import Header from "./Header";
 
 const { Content } = LayoutComponent;
 
@@ -17,8 +16,7 @@ const Layout: FC<Props> = ({ children }) => {
       <Sidebar />
 
       <LayoutComponent>
-        <Header />
-        <Content style={{ margin: "0 16px" }}>
+        <Content style={{ margin: "40px 16px" }}>
           <div>{children}</div>
         </Content>
       </LayoutComponent>

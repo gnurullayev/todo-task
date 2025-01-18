@@ -5,22 +5,6 @@ export interface ISelectData {
   label: string;
 }
 
-export interface IIconComponent {
-  fill?: string;
-  stroke?: string;
-}
-
-export interface IParams {
-  pi?: number;
-  ps?: number;
-  s?: string;
-  ot?: string;
-}
-
-export interface FormStateParams {
-  queryKey?: string;
-}
-
 export interface FormParams {
   mode: "edit" | "view" | "create";
   formFooter: ReactNode;

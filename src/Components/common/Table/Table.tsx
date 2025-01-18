@@ -7,8 +7,6 @@ import {
 } from "antd/es/table/interface";
 import { Link, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
-import { TableWrapper } from "./style";
 
 export interface TableProps {
   locale?: TableLocale;
@@ -84,7 +82,6 @@ export const Table = ({
       setInnerData(dataSource);
     }
   }, [dataSource]);
-  const { t } = useTranslation();
 
   useEffect(() => {
     setLocalPagination({
@@ -176,7 +173,7 @@ export const Table = ({
   };
 
   return (
-    <TableWrapper>
+    <>
       {createUrl && (
         <CustomLink type="primary" htmlType="button">
           <Link to={createUrl}>Yaratish</Link>
@@ -216,7 +213,7 @@ export const Table = ({
           enableSelectedRow ? rowSelectionFunction ?? rowSelection : undefined
         }
       />
-    </TableWrapper>
+    </>
   );
 };
 

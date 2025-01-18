@@ -11,11 +11,12 @@ import { message } from "antd";
 
 const ProductEdit = () => {
   const [isSuccess, setIsSuccess] = useState(false);
-  const { data, products, id } = useProductFormState();
+  const { data, products, categories } = useProductFormState();
 
   const onSubmit = (data: IProduct) => {
     const sameProduct = products.find(
-      (product: IProduct) => product.title === data.title
+      (product: IProduct) =>
+        product.title === data.title && String(product.id) !== data.id
     );
     if (sameProduct) {
       message.error("Bunday nomli mahsulot mavjud");
@@ -34,6 +35,7 @@ const ProductEdit = () => {
       initialData={data}
       mode={FormMode.edit}
       mutate={onSubmit}
+      categories={categories}
       formFooter={
         <EditFormFooter path={route(routes.HOME)} isSuccess={isSuccess} />
       }

@@ -1,35 +1,19 @@
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Button, Modal } from "antd";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-
-type KeyType = "products" | "category";
 
 interface Props {
   id: string;
   title: string;
   content?: string;
-  redirectPath?: string;
-  key: KeyType;
+  deleteData: (id: string) => void;
 }
 
 const { confirm } = Modal;
 
-function DeleteConfirmationModal({
-  id,
-  title,
-  content,
-  redirectPath,
-  key,
-}: Props) {
-  const { t } = useTranslation();
+function DeleteConfirmationModal({ id, title, content, deleteData }: Props) {
   const navigate = useNavigate();
-  const showPromiseConfirm = ({
-    id,
-    title = "Ma'lumot",
-    content,
-    key,
-  }: Props) => {
+  const showPromiseConfirm = () => {
     confirm({
       title: `${title}ni o'chirib tashlamoqchmisiz ?`,
       icon: <ExclamationCircleFilled />,
@@ -37,6 +21,7 @@ function DeleteConfirmationModal({
         ? content
         : `Agar siz ha tugmasini tanlasangiz ${title} o'chirib tashlanadi`,
       onOk() {
+        deleteData(String(id));
         return null;
       },
       okText: "Ha",
@@ -45,18 +30,7 @@ function DeleteConfirmationModal({
     });
   };
   return (
-    <Button
-      danger
-      onClick={() =>
-        showPromiseConfirm({
-          id,
-          title,
-          content,
-          redirectPath,
-          key,
-        })
-      }
-    >
+    <Button danger onClick={() => showPromiseConfirm()}>
       O'chirish
     </Button>
   );

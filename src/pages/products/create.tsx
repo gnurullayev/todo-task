@@ -11,7 +11,9 @@ import { dispatch } from "@/redux";
 
 const ProductCreate = () => {
   const [isSuccess, setIsSuccess] = useState(false);
-  const { data, products } = useProductFormState();
+  const { data, products, categories } = useProductFormState();
+
+  console.log(categories);
 
   const onSubmit = (data: IProduct) => {
     const sameProduct = products.find(
@@ -31,6 +33,7 @@ const ProductCreate = () => {
       initialData={data}
       mode={FormMode.create}
       mutate={onSubmit}
+      categories={categories}
       formFooter={
         <CreateFormFooter
           isSuccess={isSuccess}

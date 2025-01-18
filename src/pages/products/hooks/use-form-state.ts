@@ -1,3 +1,4 @@
+import { ICategory } from "@/interfaces/category";
 import { IProduct } from "@/interfaces/product";
 import { RootState } from "@/redux";
 import { useMemo } from "react";
@@ -15,6 +16,9 @@ const initialData: IProduct = {
 export const useProductFormState = () => {
   const { id: productId } = useParams();
   const products = useSelector((store: RootState) => store.products.products);
+  const categories: ICategory[] = useSelector(
+    (store: RootState) => store.products.categories
+  );
 
   const defaultData: any = useMemo(() => {
     if (productId && products) {
@@ -29,5 +33,16 @@ export const useProductFormState = () => {
     } else return initialData;
   }, [productId, products]);
 
-  return { data: defaultData, id: productId, products };
+  const filteredCategories: any = useMemo(() => {
+    return categories
+      .filter((category) => category.is_active)
+      .map((category) => ({ value: category.id, label: category.name }));
+  }, [categories]);
+
+  return {
+    data: defaultData,
+    id: productId,
+    products,
+    categories: filteredCategories,
+  };
 };
