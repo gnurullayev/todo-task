@@ -32,7 +32,7 @@ const ProductForm = ({
         rules={[
           {
             required: true,
-            message: "Iltimos mahsulot Nomini tanlang",
+            message: "Iltimos mahsulot nomini kiriting",
           },
         ]}
       />

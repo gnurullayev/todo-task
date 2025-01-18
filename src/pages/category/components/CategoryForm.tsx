@@ -16,7 +16,17 @@ const CategoryForm = ({ initialData, mode, formFooter, mutate }: Params) => {
 
   return (
     <Form initialValues={initialData} onFinish={onFinish}>
-      <Input name="name" label="Kategoriya nomi" mode={mode} />
+      <Input
+        name="name"
+        label="Kategoriya nomi"
+        mode={mode}
+        rules={[
+          {
+            required: true,
+            message: "Iltimos kategoriya nomini kiriting",
+          },
+        ]}
+      />
 
       <Checkbox
         name="is_active"
